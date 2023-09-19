@@ -1,7 +1,5 @@
 # format-azure-disk.sh
 
-https://github.com/deep-foundation/scripts/blob/7cf0e5152f410eef750e2cf1148fd33db9c0f060/azure/attach-azure-disk.sh#L1-L18
-
 ```
 export SCRIPT_NAME="format-azure-disk.sh"; touch $SCRIPT_NAME && chmod +x $SCRIPT_NAME && nano $SCRIPT_NAME
 ```
@@ -19,55 +17,13 @@ sudo partprobe "/dev/${DISK}1"
 
 # attach-azure-disk.sh
 
-```
-export SCRIPT_NAME="attach-azure-disk.sh"; touch $SCRIPT_NAME && chmod +x $SCRIPT_NAME && nano $SCRIPT_NAME
-```
-
-```sh
-set -e
-
-DISK="$1"
-FS="$2"
-DATA_DIR="$3"
-DISK_UUID=$(sudo blkid | grep "/dev/${DISK}1" | cut -d " " -f 2 | cut -d "\"" -f 2)
-
-# mount
-sudo mkdir "${DATA_DIR}"
-sudo mount "/dev/${DISK}1" "${DATA_DIR}"
-
-# attach on system start up
-FSTAB_LINE="UUID=${DISK_UUID}   ${DATA_DIR}   ${FS}   defaults,nofail   1   2"
-sudo bash -c "echo \"$FSTAB_LINE\" >> /etc/fstab"
-
-# check status
-cat /etc/fstab
-lsblk -o NAME,HCTL,SIZE,MOUNTPOINT | grep -i "sd"
-```
+https://github.com/deep-foundation/scripts/blob/7cf0e5152f410eef750e2cf1148fd33db9c0f060/azure/attach-azure-disk.sh#L1-L18
 
 # detach-azure-disk.sh
-```
-export SCRIPT_NAME="detach-azure-disk.sh"; touch $SCRIPT_NAME && chmod +x $SCRIPT_NAME && nano $SCRIPT_NAME
-```
-```sh
-set -e
 
-DISK="$1"
-DATA_DIR="$2"
-DISK_UUID=$(sudo blkid | grep "/dev/${DISK}1" | cut -d " " -f 2 | cut -d "\"" -f 2)
+https://github.com/deep-foundation/scripts/blob/main/azure/detach-azure-disk.sh#L1-L16
 
-# unmount
-sudo umount -l "/dev/${DISK}1"
-sudo rm -r "${DATA_DIR}"
-
-# detach from system start up
-sudo sed --in-place "/${DISK_UUID}/d" /etc/fstab
-
-# check status
-cat /etc/fstab
-lsblk -o NAME,HCTL,SIZE,MOUNTPOINT | grep -i "sd"
-```
-
-# Usage example
+# Prepare server
 1. Get list of disks:
 
 ```
@@ -91,6 +47,9 @@ sdb     0:0:0:0       30G
 4. Attach
 
 ```sh
+wget https://raw.githubusercontent.com/deep-foundation/scripts/main/azure/format-azure-disk.sh && chmod +x format-azure-disk.sh
+wget https://raw.githubusercontent.com/deep-foundation/scripts/main/azure/attach-azure-disk.sh && chmod +x attach-azure-disk.sh
+
 sudo ./format-azure-disk.sh sda
 sudo ./attach-azure-disk.sh sda xfs /data
 ```
@@ -98,5 +57,7 @@ sudo ./attach-azure-disk.sh sda xfs /data
 5. Deatach if needed (for example to attach it to another VM)
 
 ```sh
+wget https://raw.githubusercontent.com/deep-foundation/scripts/main/azure/detach-azure-disk.sh && chmod +x detach-azure-disk.sh
+
 sudo ./detach-azure-disk.sh sda /data
 ```
