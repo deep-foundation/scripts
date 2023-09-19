@@ -1,28 +1,3 @@
-# format-azure-disk.sh
-
-```
-export SCRIPT_NAME="format-azure-disk.sh"; touch $SCRIPT_NAME && chmod +x $SCRIPT_NAME && nano $SCRIPT_NAME
-```
-
-```sh
-set -e
-
-DISK="$1"
-
-# format
-sudo parted "/dev/${DISK}" --script mklabel gpt mkpart xfspart xfs 0% 100%
-sudo mkfs.xfs -f "/dev/${DISK}1"
-sudo partprobe "/dev/${DISK}1"
-```
-
-# attach-azure-disk.sh
-
-https://github.com/deep-foundation/scripts/blob/7cf0e5152f410eef750e2cf1148fd33db9c0f060/azure/attach-azure-disk.sh#L1-L18
-
-# detach-azure-disk.sh
-
-https://github.com/deep-foundation/scripts/blob/main/azure/detach-azure-disk.sh#L1-L16
-
 # Prepare server
 1. Get list of disks:
 
