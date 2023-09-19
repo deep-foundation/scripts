@@ -14,7 +14,6 @@ sdb     0:0:0:0       30G
 ├─sdb1              29.9G /
 ├─sdb14                4M 
 └─sdb15              106M /boot/efi
-
 ```
 
 3. Choose a disk, for example `sda`
