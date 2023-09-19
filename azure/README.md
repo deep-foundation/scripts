@@ -1,4 +1,4 @@
-# Prepare disks
+# Attach disk
 1. Get list of disks:
 
 ```
@@ -29,7 +29,33 @@ sudo ./format-azure-disk.sh sda
 sudo ./attach-azure-disk.sh sda xfs /data
 ```
 
-5. Deatach if needed (for example to attach it to another VM)
+# Prepare docker
+
+1. Install docker
+
+```sh
+wget https://raw.githubusercontent.com/deep-foundation/scripts/main/docker/install-docker.sh && chmod +x install-docker.sh
+sudo ./install-docker.sh
+```
+
+2. Check docker
+
+```sh
+wget https://raw.githubusercontent.com/deep-foundation/scripts/main/docker/check-docker.sh && chmod +x check-docker.sh
+sudo ./check-docker.sh
+```
+
+3. Move docker to another disk (optional)
+
+```sh
+wget https://raw.githubusercontent.com/deep-foundation/scripts/main/docker/move-docker-root.sh && chmod +x move-docker-root.sh
+sudo ./move-docker-root.sh /data/docker
+sudo ./check-docker.sh
+```
+
+# Detach disk
+
+For example to attach it to another VM.
 
 ```sh
 wget https://raw.githubusercontent.com/deep-foundation/scripts/main/azure/detach-azure-disk.sh && chmod +x detach-azure-disk.sh
