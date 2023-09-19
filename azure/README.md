@@ -1,4 +1,4 @@
-# Prepare server
+# Prepare disks
 1. Get list of disks:
 
 ```
