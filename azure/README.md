@@ -17,7 +17,7 @@ sdb     0:0:0:0       30G
 
 ```
 
-3. Choose disk, for example `sda`
+3. Choose a disk, for example `sda`
 
 4. Attach
 
