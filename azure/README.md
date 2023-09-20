@@ -28,6 +28,8 @@ sudo ./format-azure-disk.sh sda
 sudo ./attach-azure-disk.sh sda xfs /data
 ```
 
+Additional details: https://learn.microsoft.com/en-us/azure/virtual-machines/linux/attach-disk-portal?tabs=ubuntu#connect-to-the-linux-vm-to-mount-the-new-disk
+
 # Prepare docker
 
 1. Install docker
