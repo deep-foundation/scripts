@@ -1,0 +1,12 @@
+version: '0.0.1'  # This is an example version, you might want to use the one that fits your Docker Compose capabilities.
+
+services:
+  webhook:  # Keeping this here as you mentioned it, but it's not configured beyond the defaults
+    image: sweepai/sweep:latest  # Assumes this is a common image you want. If not, adjust or remove.
+
+  sandbox-web:
+    image: sweepai/sweep:latest
+    ports:
+      - "8081:8080"
+    env_file:
+      - .env
